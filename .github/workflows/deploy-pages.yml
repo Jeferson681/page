@@ -28,8 +28,46 @@ jobs:
           # ensure CNAME (if present) is included
           if [ -f CNAME ]; then cp CNAME public/; fi
 
+      - name: Smoke-check public
+        run: |
+          if [ -f public/index.html ]; then
+            echo "public/index.html found"
+          else
+            echo "::warning::public/index.html not found — workflow will continue but Pages may publish an empty site."
+          fi
+
+      - name: Ensure Pages site exists (auto-detect path)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          echo "Detecting publish path..."
+          if [ -f public/index.html ]; then
+            PATH_SETTING="/public"
+          else
+            echo "No public/index.html detected — defaulting to root '/'"
+            PATH_SETTING="/"
+          fi
+          echo "Using Pages path: $PATH_SETTING"
+          # ensure .nojekyll so GitHub Pages does not process with Jekyll
+          mkdir -p public
+          touch public/.nojekyll
+          resp=$(curl -s -o /dev/null -w "%{http_code}" -X PUT \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/$REPO/pages \
+            -d "{\"source\":{\"branch\":\"main\",\"path\":\"${PATH_SETTING}\"}}")
+          if [ "$resp" != "201" ] && [ "$resp" != "200" ]; then
+            echo "Warning: Pages API returned HTTP $resp (expected 200 or 201)."
+          else
+            echo "Pages resource created or confirmed (HTTP $resp)."
+          fi
+
       - name: Configure Pages
         uses: actions/configure-pages@v3
+        with:
+          enablement: true
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
