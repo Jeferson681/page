@@ -1,0 +1,36 @@
+# Node / package managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Build / caches
+dist/
+.build/
+.cache/
+.parcel-cache/
+coverage/
+.sass-cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Environment
+.env
+.env.*
+
+# Logs
+*.log
+
+# History / misc
+.history/

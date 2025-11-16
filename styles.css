@@ -1,0 +1,291 @@
+/* ------------------------------ */
+/* THEME VARIABLES                */
+/* ------------------------------ */
+:root {
+  --bg: #f5f5f5;
+  --bg-card: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #555;
+  --accent: #007bff;
+  --border: #ddd;
+  --radius: 8px;
+  --max-width: 1000px; /* moderate default max width (reduced to avoid large spreads) */
+  --shadow: 0px 2px 8px rgba(0,0,0,0.08);
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Base font size: ~17px to slightly increase default scale for rem units */
+html { font-size: 17px; }
+
+[data-theme="dark"] {
+  --bg: #121212;
+  --bg-card: #1e1e1e;
+  --text: #e6e6e6;
+  --text-muted: #b4b4b4;
+  --accent: #6aa8ff;
+  --border: #2a2a2a;
+  --shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+/* ------------------------------ */
+/* GLOBAL                         */
+/* ------------------------------ */
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  transition: background 0.25s, color 0.25s;
+  line-height: 1.55;
+}
+
+.container {
+  width: 90%;
+  max-width: var(--max-width);
+  margin: auto;
+  padding-top: 3rem;
+  /* responsive horizontal gutters that grow modestly on wide screens; cap reduced to avoid huge gaps */
+  padding-inline: clamp(1rem, 2vw, 2rem);
+}
+
+section { margin-bottom: 2.5rem; }
+
+/* ------------------------------ */
+/* HEADER / NAV                   */
+/* ------------------------------ */
+
+.header {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.name { margin: 0; font-size: 2rem; font-weight: 700; }
+
+.role { color: var(--accent); font-weight: 600; margin: .5rem 0 1rem; text-align: left; }
+
+/* Make the role line approximately 18px at larger viewports but responsive
+   and keep it scaled relative to paragraph text; avoid being smaller than body text. */
+.role {
+  font-size: clamp(1.05rem, calc(1rem + 0.6vw), 1.125rem);
+  line-height: 1.3;
+}
+/* Ensure .role shares the same content column as .summary so it scales and aligns
+   with paragraph text on very wide screens instead of sticking to the page edge. */
+.role {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(1rem, 2vw, 2rem);
+}
+.summary { max-width: var(--max-width); margin: 0 auto; color: var(--text-muted); }
+
+/* theme toggle button */
+.theme-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.theme-toggle:hover { color: var(--accent); }
+
+/* SVG sizing for theme icon */
+.theme-toggle svg { width: 1.25rem; height: 1.25rem; display: inline-block; vertical-align: middle; }
+
+/* ------------------------------ */
+/* LISTS / PILL                 */
+/* ------------------------------ */
+
+.tag-list,
+.process-list,
+.contact-list { list-style: none; padding-left: 0; }
+
+/* Skills chips: center the group, keep individual items compact */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.tag-list li {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  margin: 0;
+}
+
+.process-list li { margin-bottom: 8px; color: var(--text); }
+.process-list li { text-align: left; padding-left: 0.5rem; }
+.contact-list li { margin-bottom: 6px; }
+.contact-list a { color: var(--accent); text-decoration: none; }
+
+/* ------------------------------ */
+/* PROJETO / CARDS               */
+/* ------------------------------ */
+
+.project { background: var(--bg-card); padding: 1.25rem 1rem; border-radius: var(--radius); box-shadow: var(--shadow); margin: 0 0 1rem 1rem; }
+.project h3 a { color: var(--accent); text-decoration: none; }
+.project p { color: var(--text-muted); }
+
+/* responsive grid for projects (if there are cards) */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem; }
+
+/* ------------------------------ */
+/* FOOTER                        */
+/* ------------------------------ */
+
+.footer { text-align: center; padding: 20px; font-size: .95rem; color: var(--text-muted); margin-top: 40px; border-top: 1px solid var(--border); }
+
+/* Footer layout: place copyright left and quote right (smaller) */
+.footer-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+.footer-copy { margin: 0; white-space: nowrap; }
+.footer-quote {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: right;
+  line-height: 1.4;
+  margin-left: auto;
+  max-width: 60%;
+}
+
+/* Footer quote: Times New Roman; apply italics only to the quote text, keep author normal */
+.footer-quote {
+  font-family: 'Times New Roman', Times, serif;
+  font-style: normal;
+}
+
+.footer-quote .quote-text {
+  font-style: italic;
+}
+
+.footer-quote .quote-author {
+  font-style: normal;
+  margin-left: 0.5rem;
+}
+
+@media (min-width: 900px) {
+  /* container handles max-width; keep footer-row full width inside container */
+  .footer-row { width: 100%; }
+}
+
+/* Very large screens: increase max-width and adjust footer/chips spacing */
+@media (min-width: 1200px) {
+  :root { --max-width: 1100px; }
+}
+
+@media (min-width: 1400px) {
+  :root { --max-width: 1200px; }
+  .footer-quote { max-width: 46%; font-size: 0.95rem; }
+  .tag-list { gap: 0.65rem; }
+  .tag-list li { padding: 6px 10px; }
+  .project { margin-left: 1.25rem; max-width: 420px; }
+  .header { padding: 2rem 1rem; }
+}
+
+@media (min-width: 2000px) {
+  :root { --max-width: 1300px; }
+  .footer-quote { max-width: 46%; }
+}
+
+/* Heading sizes scale modestly with viewport to avoid tiny text on large displays */
+h1 { font-size: clamp(1.6rem, 1.8vw + 0.5rem, 2.25rem); }
+h2 { font-size: clamp(1.15rem, 1.2vw + 0.2rem, 1.45rem); }
+h3 { font-size: clamp(1.05rem, 1vw + 0.1rem, 1.2rem); }
+
+@media (max-width: 700px) {
+  .footer-row { flex-direction: column; align-items: center; text-align: center; padding: 0 1rem; }
+  .footer-quote { text-align: center; margin-top: 0.5rem; max-width: 100%; }
+  .footer-copy { white-space: normal; }
+}
+
+/* small helpers */
+.pill { display: inline-block; padding: .35rem .75rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; margin: .25rem; }
+
+.checklist li { margin: .5rem 0; background: var(--bg-card); padding: .75rem; border-radius: 8px; border: 1px solid var(--border); }
+
+@media (max-width: 720px) {
+  .theme-toggle { right: .5rem; top: .5rem; }
+  .name { font-size: 1.5rem; }
+  .container { padding-top: 2rem; }
+}
+
+/* ------------------------------ */
+/* Visual pattern adjustments     */
+/* - Center only headings and project cards
+   - Keep paragraphs and lists left-aligned
+   - Moderate, consistent spacing
+ */
+
+
+/* Titles: centralizados e hierarquia sutil */
+h1, h2, h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+h1 { font-size: 2rem; color: var(--text); }
+h2 { font-size: 1.4rem; color: var(--accent); font-weight: 600; }
+h3 { font-size: 1.15rem; color: var(--text); font-weight: 600; }
+
+/* Section headers balance */
+.section h2 { margin-top: 0; margin-bottom: 0.75rem; }
+
+/* Keep long text left-aligned for readability (exclude .role) */
+p, .summary, .project p { text-align: left; }
+
+/* Keep paragraphs and descriptive lists away from the left edge
+  - provide modest horizontal padding for comfortable reading
+  - value chosen: 1rem (adjustable if you prefer more/less)
+  - exclude .role so the role line centers properly on very wide screens
+*/
+p, .summary, .project p, ul.process-list, ul.contact-list { padding: 0 1rem; }
+
+@media (min-width: 900px) {
+  p, .summary, .project p, ul.process-list, ul.contact-list { padding: 0 2rem; }
+}
+
+/* Lists (skills, processes, próximos passos) left-aligned */
+ul.tag-list, ul.process-list, ul.contact-list { text-align: left; }
+
+/* Center project cards inside the grid while keeping card content left-aligned */
+.projects-grid { justify-items: start; }
+.project { width: 100%; max-width: 360px; text-align: left; margin: 0 0 1rem 1rem; }
+.project h3 { text-align: center; margin-top: 0; }
+
+/* Footer centered, modest padding */
+.footer { padding: 1.25rem 0; }
+
+/* Reduce overly large vertical gaps and keep consistent spacing */
+section { margin-bottom: 1.75rem; }
+.container { padding-top: 2rem; }
+
+/* Keep tag pills compact */
+.tag-list li { padding: 5px 10px; margin: 3px 6px; }
+
+/* Subtle focus styling for accessibility */
+a:focus, button:focus { box-shadow: 0 0 0 3px rgba(34,197,94,0.12); outline: none; }
+

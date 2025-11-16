@@ -1,0 +1,40 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: 'deploy-pages'
+      cancel-in-progress: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare site artifact
+        run: |
+          mkdir -p public
+          # copy all files except Git metadata and workflow directory into public
+          rsync -av --exclude='.git' --exclude='.github' --exclude='public' ./ public/
+          # ensure CNAME (if present) is included
+          if [ -f CNAME ]; then cp CNAME public/; fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1

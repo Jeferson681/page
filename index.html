@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Currículo Profissional · Jeferson Oliveira de Sousa" />
+  <title>Jeferson Oliveira de Sousa · Currículo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="name">Jeferson Oliveira de Sousa</h1>
+    <p class="role">Estudante de Análise e Desenvolvimento de Sistemas</p>
+    <p class="summary">
+      Em fase inicial de carreira, com foco em desenvolvimento, automação e fundamentos de DevOps.
+      Tenho estudado Python, Linux, Docker e GitHub Actions, aplicando o conhecimento em projetos
+      práticos que reforçam organização, documentação e boas práticas.
+    </p>
+    <!-- botão alternar tema -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
+      <span class="theme-icon" aria-hidden="true"></span>
+    </button>
+  </header>
+
+  <main class="content container">
+
+    <!-- Sobre -->
+    <section class="section">
+      <h2>Sobre Mim</h2>
+      <p>
+        Sou estudante de Análise e Desenvolvimento de Sistemas com foco em DevOps e programação, praticando principalmente Python, Docker e automação.
+      </p>
+      <p>
+        Desenvolvi um projeto de monitoramento local onde trabalhei com logs, testes automatizados (Pytest) e pipelines de CI; busco minha primeira oportunidade para aplicar e evoluir essas habilidades.
+      </p>
+    </section>
+
+    <!-- Habilidades -->
+    <section class="section">
+      <h2>Habilidades</h2>
+
+      <h3>Fundamentos Consolidados</h3>
+      <ul class="tag-list">
+        <li>Python</li>
+        <li>Linux / WSL2</li>
+        <li>Git & GitHub</li>
+        <li>Docker</li>
+        <li>GitHub Actions (CI)</li>
+        <li>psutil</li>
+        <li>Pytest</li>
+        <li>Ruff / Isort</li>
+        <li>Bandit</li>
+        <li>Pre-commit</li>
+        <li>Markdown</li>
+        <li>Ambientes virtuais (venv)</li>
+      </ul>
+
+      <h3>Ferramentas Praticadas</h3>
+      <ul class="tag-list">
+        <li>Prometheus</li>
+        <li>Grafana</li>
+        <li>Loki</li>
+        <li>Docker Compose</li>
+        <li>Trivy</li>
+        <li>Snyk</li>
+        <li>Gitleaks</li>
+        <li>Dependabot</li>
+        <li>Terraform (validação)</li>
+      </ul>
+
+      <h3>Em aprendizado</h3>
+      <ul class="tag-list">
+        <li>Kubernetes</li>
+        <li>Observabilidade avançada</li>
+        <li>SQL</li>
+        <li>DevSecOps</li>
+      </ul>
+    </section>
+
+    <!-- Projeto -->
+    <section class="section">
+      <h2>Projeto em Destaque</h2>
+
+      <article class="project">
+        <h3>
+          <a href="https://github.com/Jeferson681/infra-monitoring-system" target="_blank">
+            Infra Monitoring System
+          </a>
+        </h3>
+
+        <p>
+          Projeto criado para consolidar fundamentos de automação, métricas e pipelines.
+          Coleta métricas locais com psutil, expõe dados para Prometheus, utiliza Docker para
+          reprodutibilidade e emprega GitHub Actions para testes, análise de segurança e validações.
+        </p>
+
+        <p>
+          O foco do projeto é educacional, reforçando práticas reais como organização de código,
+          documentação, testes automatizados e integração de ferramentas essenciais do ecossistema
+          moderno de desenvolvimento.
+        </p>
+      </article>
+    </section>
+
+    <!-- Processos -->
+    <section class="section">
+      <h2>Processos & Práticas Profissionais</h2>
+      <ul class="process-list">
+        <li>Versionamento completo com Git: branches, PRs e histórico limpo.</li>
+        <li>Pipelines no GitHub Actions com testes, lint, análise de segurança e build.</li>
+        <li>Testes automatizados com Pytest e medição de cobertura.</li>
+        <li>Qualidade e segurança: Ruff, Isort, Bandit, Gitleaks, Snyk, Trivy e Dependabot.</li>
+        <li>Containerização com Docker e serviços via Docker Compose.</li>
+        <li>Documentação técnica estruturada em PT e EN.</li>
+        <li>Ambientes isolados e reprodutíveis com venv.</li>
+      </ul>
+    </section>
+
+    <!-- Próximos passos -->
+    <section class="section">
+      <h2>Próximos Passos</h2>
+      <ul class="process-list">
+        <li>Consolidar Docker Compose com múltiplos serviços.</li>
+        <li>Aprofundar Linux e fundamentos de redes.</li>
+        <li>Melhorar observabilidade com dashboards dedicados.</li>
+        <li>Iniciar implantação básica com Kubernetes.</li>
+        <li>Prática com SQL e boas práticas de dados.</li>
+      </ul>
+    </section>
+
+    <!-- Contatos -->
+    <section class="section">
+      <h2>Contato</h2>
+      <ul class="contact-list">
+        <li><a href="https://linkedin.com/in/seu-perfil" target="_blank">LinkedIn</a></li>
+        <li><a href="https://github.com/Jeferson681" target="_blank">GitHub</a></li>
+        <li><a href="mailto:jefersonoliveiradesousa681@gmail.com">E-mail</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <p class="footer-copy">&copy; <span id="year"></span> Jeferson Oliveira de Sousa</p>
+      <p class="footer-quote"><span class="quote-text">“Jamais considere seus estudos como um dever, mas como a invejável oportunidade de aprender a conhecer a beleza libertadora do intelecto, para sua própria alegria pessoal e para o proveito da comunidade à qual seu futuro trabalho pertencer.”</span>
+        <span class="quote-author">— Albert Einstein</span></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
