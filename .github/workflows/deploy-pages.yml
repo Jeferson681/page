@@ -1,4 +1,5 @@
-name: Deploy site to GitHub Pages
+# Deploy static site to GitHub Pages via gh-pages branch
+name: Deploy to GitHub Pages (gh-pages)
 
 on:
   push:
@@ -7,72 +8,50 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    concurrency:
-      group: 'deploy-pages'
-      cancel-in-progress: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare site artifact
+      # Se precisar de build (ex: npm run build), descomente e ajuste publish_dir abaixo:
+      # - name: Setup Node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '18'
+      # - name: Install dependencies
+      #   run: npm ci
+      # - name: Build
+      #   run: npm run build
+
+      - name: Prepare publish directory
         run: |
           mkdir -p public
-          # copy all files except Git metadata and workflow directory into public
-          rsync -av --exclude='.git' --exclude='.github' --exclude='public' ./ public/
-          # ensure CNAME (if present) is included
-          if [ -f CNAME ]; then cp CNAME public/; fi
-
-      - name: Smoke-check public
-        run: |
-          if [ -f public/index.html ]; then
-            echo "public/index.html found"
-          else
-            echo "::warning::public/index.html not found — workflow will continue but Pages may publish an empty site."
-          fi
-
-      - name: Ensure Pages site exists (auto-detect path)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-        run: |
-          set -e
-          echo "Detecting publish path..."
-          if [ -f public/index.html ]; then
-            PATH_SETTING="/public"
-          else
-            echo "No public/index.html detected — defaulting to root '/'"
-            PATH_SETTING="/"
-          fi
-          echo "Using Pages path: $PATH_SETTING"
-          # ensure .nojekyll so GitHub Pages does not process with Jekyll
-          mkdir -p public
+          # copy site files into public excluding git metadata and workflow dir
+          rsync -av --delete --exclude='.git' --exclude='.github' --exclude='public' ./ public/
+          # ensure nojekyll
           touch public/.nojekyll
-          resp=$(curl -s -o /dev/null -w "%{http_code}" -X PUT \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/$REPO/pages \
-            -d "{\"source\":{\"branch\":\"main\",\"path\":\"${PATH_SETTING}\"}}")
-          if [ "$resp" != "201" ] && [ "$resp" != "200" ]; then
-            echo "Warning: Pages API returned HTTP $resp (expected 200 or 201)."
+
+      - name: Debug publish_dir
+        run: |
+          echo "PWD: $(pwd)"
+          echo "Listing public dir:" 
+          ls -la public || true
+          if [ -f public/index.html ]; then
+            echo "index.html size:";
+            stat -c '%s %n' public/index.html || true
+            echo "--- head (first 400 bytes) of public/index.html ---";
+            head -c 400 public/index.html || true
+            echo "--- end head ---";
           else
-            echo "Pages resource created or confirmed (HTTP $resp)."
+            echo "public/index.html not present"
           fi
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v3
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          enablement: true
-
-      - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: public
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
